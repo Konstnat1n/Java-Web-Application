@@ -27,15 +27,44 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <!-- Logout Servlet -->
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.example.webapp.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
     <!-- Books Servlet -->
     <servlet>
         <servlet-name>BooksServlet</servlet-name>
         <servlet-class>com.example.webapp.servlets.BooksServlet</servlet-class>
-        <load-on-startup>3</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>BooksServlet</servlet-name>
         <url-pattern>/books</url-pattern>
+    </servlet-mapping>
+
+    <!-- Update Servlet -->
+    <servlet>
+        <servlet-name>UpdateServlet</servlet-name>
+        <servlet-class>com.example.webapp.servlets.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServlet</servlet-name>
+        <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+
+    <!-- Delete Servlet -->
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>com.example.webapp.servlets.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
     </servlet-mapping>
 
     <!-- Welcome File -->

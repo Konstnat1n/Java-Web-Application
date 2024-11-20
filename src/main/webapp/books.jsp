@@ -6,6 +6,9 @@
 </head>
 <body>
 <h1>Available Books</h1>
+
+<a href="logout" style="color: red; text-decoration: none;">Logout</a>
+
 <c:if test="${not empty books}">
     <c:forEach var="book" items="${books}">
         <!-- Book Details -->
