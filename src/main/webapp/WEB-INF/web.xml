@@ -27,6 +27,17 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <!-- Add Book Servlet -->
+    <servlet>
+        <servlet-name>AddBookServlet</servlet-name>
+        <servlet-class>com.example.webapp.servlets.AddBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddBookServlet</servlet-name>
+        <url-pattern>/addBook</url-pattern>
+    </servlet-mapping>
+
+
     <!-- Logout Servlet -->
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
