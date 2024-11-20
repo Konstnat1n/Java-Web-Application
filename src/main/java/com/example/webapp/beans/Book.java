@@ -1,12 +1,22 @@
 package com.example.webapp.beans;
 
 public class Book {
+    private int id; // Add this field
     private String title;
     private String author;
     private String genre;
     private String description;
 
-    // Getters and setters
+    // Getter and Setter for id
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // Existing getters and setters
     public String getTitle() {
         return title;
     }
@@ -37,10 +47,5 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Book{title='" + title + "', author='" + author + "'}";
     }
 }

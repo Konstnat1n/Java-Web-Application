@@ -22,27 +22,22 @@ public class BooksServlet extends HttpServlet {
         List<Book> books = new ArrayList<>();
 
         try (Connection connection = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM books";
+            String sql = "SELECT id, title, author, genre, description FROM books";
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
-            // Log retrieved books
             while (rs.next()) {
                 Book book = new Book();
+                book.setId(rs.getInt("id")); // Set the id
                 book.setTitle(rs.getString("title"));
                 book.setAuthor(rs.getString("author"));
                 book.setGenre(rs.getString("genre"));
                 book.setDescription(rs.getString("description"));
                 books.add(book);
-
-                // Debugging: Log each book
-                System.out.println("Book Retrieved: Title=" + book.getTitle() + ", Author=" + book.getAuthor());
             }
-            
-            // Pass books list to JSP
+
             request.setAttribute("books", books);
             request.getRequestDispatcher("books.jsp").forward(request, response);
-
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error retrieving books.");
