@@ -7,7 +7,7 @@
 
     <tlib-version>1.0</tlib-version>
     <short-name>BookFormatter</short-name>
-    <uri>/WEB-INF/tags/bookformatter</uri>
+    <uri>http://example.com/tags/bookformatter</uri>
 
     <tag>
         <name>bookFormatter</name>
@@ -16,12 +16,22 @@
         <attribute>
             <name>title</name>
             <required>true</required>
-            <rtexprvalue>true</rtexprvalue> <!-- Enable runtime expressions -->
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
         <attribute>
             <name>author</name>
             <required>true</required>
-            <rtexprvalue>true</rtexprvalue> <!-- Enable runtime expressions -->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>genre</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>description</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
 </taglib>

@@ -46,7 +46,7 @@
     <!-- Taglib Mapping for TLD -->
     <jsp-config>
         <taglib>
-            <taglib-uri>/WEB-INF/tags/bookformatter</taglib-uri>
+            <taglib-uri>http://example.com/tags/bookformatter</taglib-uri>
             <taglib-location>/WEB-INF/tags/bookformatter.tld</taglib-location>
         </taglib>
     </jsp-config>

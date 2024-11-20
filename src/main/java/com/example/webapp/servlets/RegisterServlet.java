@@ -1,17 +1,15 @@
 package com.example.webapp.servlets;
 
-import com.example.webapp.beans.User;
-
-import jakarta.servlet.*;
+import com.example.webapp.utils.DBConnection;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 
 public class RegisterServlet extends HttpServlet {
-    private static final List<User> users = new ArrayList<>();
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -19,16 +17,17 @@ public class RegisterServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
 
-        User newUser = new User();
-        newUser.setUsername(username);
-        newUser.setPassword(password);
-        newUser.setEmail(email);
-
-        users.add(newUser);
-        response.sendRedirect("login.jsp");
-    }
-
-    public static List<User> getUsers() {
-        return users;
+        try (Connection connection = DBConnection.getConnection()) {
+            String sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.setString(3, email);
+            stmt.executeUpdate();
+            response.sendRedirect("login.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendRedirect("register.jsp?error=1");
+        }
     }
 }
