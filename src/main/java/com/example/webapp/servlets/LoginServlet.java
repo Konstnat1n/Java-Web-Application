@@ -2,7 +2,8 @@ package com.example.webapp.servlets;
 
 import com.example.webapp.beans.User;
 import com.example.webapp.utils.DBConnection;
-import jakarta.servlet.*;
+
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.Connection;
@@ -17,27 +18,44 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
+        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
+            request.setAttribute("errorMessage", "Username and password cannot be empty.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+            return;
+        }
+
         try (Connection connection = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            String sql = "SELECT * FROM users WHERE username = ?";
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
-            stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                User user = new User();
-                user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
+                String dbPassword = rs.getString("password");
 
-                HttpSession session = request.getSession();
-                session.setAttribute("loggedInUser", user);
-                response.sendRedirect("books");
+                // Password validation
+                if (dbPassword.equals(password)) {
+                    User user = new User();
+                    user.setUsername(rs.getString("username"));
+                    user.setEmail(rs.getString("email"));
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedInUser", user);
+                    response.sendRedirect("books");
+                } else {
+                    // Incorrect password
+                    request.setAttribute("errorMessage", "Invalid password. Please try again.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                }
             } else {
-                response.sendRedirect("login.jsp?error=1");
+                // Username not found
+                request.setAttribute("errorMessage", "Username does not exist.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendRedirect("login.jsp?error=2");
+            request.setAttribute("errorMessage", "Database connection error. Please try again later.");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 }
